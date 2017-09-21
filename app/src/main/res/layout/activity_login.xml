@@ -17,6 +17,13 @@
     <include layout="@layout/content_login"
         android:id="@+id/include" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="432dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/regfullscreen"
+        android:layout_marginLeft="25dp"/>
+
     <EditText
         android:id="@+id/mobile_text"
         android:layout_width="324dp"
@@ -40,13 +47,6 @@
         android:textColor="#ffffff"
 
         />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="432dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:background="@drawable/regfullscreen" />
 
 
 </android.support.design.widget.CoordinatorLayout>
