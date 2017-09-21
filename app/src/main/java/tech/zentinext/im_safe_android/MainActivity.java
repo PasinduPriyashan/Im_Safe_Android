@@ -3,13 +3,12 @@ package tech.zentinext.im_safe_android;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.gms.internal.lo;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,7 +19,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -29,9 +27,9 @@ import java.net.URLEncoder;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    Location mylastLocation;
     private FusedLocationProviderClient mFusedLocationClient;
     private boolean mLocationPermissionGranted;
-    Location mylastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +38,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
-        new LocationTracker().execute(new Object[]{MainActivity.this,true});
-
+        new LocationTracker().execute(new Object[]{MainActivity.this, true});
 
 
     }
 
-    public void firealarm(View view){
+    public void firealarm(View view) {
         System.out.println(mylastLocation);
     }
 
-    public void getLoco(){
+    public void getLoco() {
         getCurrentLocation();
     }
 
-    private void getLocation(){
+    private void getLocation() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    if (location!=null){
+                    if (location != null) {
                         mylastLocation = location;
                         //System.out.println(location);
                     }
@@ -90,18 +87,18 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-class LocationTracker extends AsyncTask{
+class LocationTracker extends AsyncTask {
 
 
     @Override
     protected Object doInBackground(Object[] params) {
-        while (true){
+        while (true) {
 
             try {
-                while((boolean)params[1]){
-                MainActivity mainActivity = (MainActivity) params[0];
-                mainActivity.getLoco();
-                    if (mainActivity.mylastLocation!=null) {
+                while ((boolean) params[1]) {
+                    MainActivity mainActivity = (MainActivity) params[0];
+                    mainActivity.getLoco();
+                    if (mainActivity.mylastLocation != null) {
                         String link = "https://imsafe.cf/location";
 
                         JSONArray jsonArray = new JSONArray();
@@ -119,7 +116,16 @@ class LocationTracker extends AsyncTask{
                         jsonArray.put(jsonObject2);
 
 
-                        String data = URLEncoder.encode("data", "UTF-8")+"="+URLEncoder.encode(jsonArray.toString(), "UTF-8");
+//                        String data = URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode(jsonArray.toString(), "UTF-8");
+
+                        String data  = URLEncoder.encode("id", "UTF-8") + "=" +
+                                URLEncoder.encode("1206", "UTF-8")+"&"+
+
+                                URLEncoder.encode("lat", "UTF-8") + "=" +
+                                URLEncoder.encode("5521512", "UTF-8")+"&"+
+
+                                URLEncoder.encode("lot", "UTF-8") + "=" +
+                                URLEncoder.encode("101010", "UTF-8");
                         URL url = new URL(link);
                         URLConnection conn = url.openConnection();
                         //System.out.println(data);
@@ -146,9 +152,10 @@ class LocationTracker extends AsyncTask{
                         }
                         System.out.println(results);
                     }
-                Thread.sleep(4000);}
+                    Thread.sleep(4000);
+                }
                 return null;
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
