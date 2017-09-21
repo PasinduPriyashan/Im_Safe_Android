@@ -119,7 +119,7 @@ class LocationTracker extends AsyncTask{
                         jsonArray.put(jsonObject2);
 
 
-                        String data = URLEncoder.encode("attr", "UTF-8")+"="+URLEncoder.encode(jsonArray.toString(), "UTF-8");
+                        String data = URLEncoder.encode("data", "UTF-8")+"="+URLEncoder.encode(jsonArray.toString(), "UTF-8");
                         URL url = new URL(link);
                         URLConnection conn = url.openConnection();
                         //System.out.println(data);
