@@ -7,11 +7,11 @@
     tools:context="tech.zentinext.im_safe_android.MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:drawable/btn_dialog"
+        android:onClick="firealarm"
         android:text="Button"
-        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="66dp" />
 </android.support.constraint.ConstraintLayout>
